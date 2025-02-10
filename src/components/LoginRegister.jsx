@@ -5,25 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const LoginRegister = () => {
+  const [username, setUsername] = useState(""); // New state for username
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cookies, setCookies] = useCookies(["access_token"]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSignUpClick = async (event) => {
     event.preventDefault();
-    setError(""); 
+    setError("");
 
     try {
       const response = await axios.post("https://emp-backend-1s3q.onrender.com/api/auth/register", {
+        username, // Send username
         email,
         password,
       });
       alert("Registration successful! Please login.");
-      setIsLogin(true); 
+      setIsLogin(true);
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred.");
     }
@@ -31,7 +32,7 @@ const LoginRegister = () => {
 
   const handleSignInClick = async (event) => {
     event.preventDefault();
-    setError(""); 
+    setError("");
 
     try {
       const response = await axios.post("https://emp-backend-1s3q.onrender.com/api/auth/login", {
@@ -41,12 +42,12 @@ const LoginRegister = () => {
 
       if (response.data.isAdmin) {
         alert("Welcome Admin!");
-        navigate("/admin-dashboard");  // Redirect to the admin dashboard
+        navigate("/admin-dashboard");
       } else {
         setCookies("access_token", response.data.token);
         window.localStorage.setItem("email", response.data.email);
         alert("Welcome User!");
-        navigate("/dashboard");  // Redirect to the user dashboard
+        navigate("/dashboard");
       }
     } catch (err) {
       alert("An error occurred. Please try again.");
@@ -70,9 +71,6 @@ const LoginRegister = () => {
           <p className="text-gray-600">
             Manage your events seamlessly. Create, manage, and track your events in one place. Whether you are hosting or attending, we’ve got you covered.
           </p>
-        </div>
-        <div className="space-y-4">
-          {/* Feature icons */}
         </div>
       </motion.div>
 
@@ -104,8 +102,23 @@ const LoginRegister = () => {
         {/* Error Message */}
         {error && <div className="text-red-600 text-sm mb-4">{error}</div>}
 
-        {/* Login Form */}
+        {/* Form */}
         <form className="space-y-6" onSubmit={isLogin ? handleSignInClick : handleSignUpClick}>
+          {!isLogin && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
+              <motion.input
+                type="text"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-black"
+                placeholder="Enter your Username"
+                onChange={(e) => setUsername(e.target.value)}
+                required={!isLogin}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
             <motion.input
