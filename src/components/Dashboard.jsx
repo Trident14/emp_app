@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const fetchEvents = async (filters) => {
     const { category, date } = filters;
-    let url = 'http://localhost:4080/api/events';
+    let url = 'https://emp-backend-1s3q.onrender.com/api/events';
 
     if (category) url += `?category=${category}`;
     if (date) url += `&date=${date}`;
@@ -38,21 +38,21 @@ const Dashboard = () => {
   };
 
   const fetchRegisteredEvents = async () => {
-    const response = await axios.get('http://localhost:4080/api/events/registered-events', {
+    const response = await axios.get('https://emp-backend-1s3q.onrender.com/api/events/registered-events', {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
 
   const fetchUserEvents = async () => {
-    const response = await axios.get('http://localhost:4080/api/events/my-events', {
+    const response = await axios.get('https://emp-backend-1s3q.onrender.com/api/events/my-events', {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
 
   const createEvent = async (eventData) => {
-    const response = await axios.post('http://localhost:4080/api/events/create', eventData, {
+    const response = await axios.post('https://emp-backend-1s3q.onrender.com/api/events/create', eventData, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -87,7 +87,7 @@ const Dashboard = () => {
   
   const deleteEvent = async (eventId) => {
     try {
-      const response = await axios.delete(`http://localhost:4080/api/events/${eventId}`, {
+      const response = await axios.delete(`https://emp-backend-1s3q.onrender.com/api/events/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Event deleted successfully');
@@ -100,7 +100,7 @@ const Dashboard = () => {
 
   const withdraw = async (eventId) => {
     try {
-        const response = await axios.delete(`http://localhost:4080/api/events/attend/${eventId}`, {
+        const response = await axios.delete(`https://emp-backend-1s3q.onrender.com/api/events/attend/${eventId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert('Event de-registered successfully');
@@ -111,7 +111,7 @@ const Dashboard = () => {
       }
     };
   const { mutate: updateEvent } = useMutation(
-    (eventData) => axios.put(`http://localhost:4080/api/events/update/${eventData.id}`, eventData, {
+    (eventData) => axios.put(`https://emp-backend-1s3q.onrender.com/api/events/update/${eventData.id}`, eventData, {
       headers: { Authorization: `Bearer ${token}` },
     }),
     {
@@ -196,7 +196,7 @@ const Dashboard = () => {
   // Handle register button click
   const handleRegister = (eventId) => {
     axios
-      .post(`http://localhost:4080/api/events/attend/${eventId}`, {}, {
+      .post(`https://emp-backend-1s3q.onrender.com/api/events/attend/${eventId}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

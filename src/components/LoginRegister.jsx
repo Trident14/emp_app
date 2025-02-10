@@ -18,7 +18,7 @@ const LoginRegister = () => {
     setError(""); 
 
     try {
-      const response = await axios.post("http://localhost:4080/api/auth/register", {
+      const response = await axios.post("https://emp-backend-1s3q.onrender.com/api/auth/register", {
         email,
         password,
       });
@@ -34,7 +34,7 @@ const LoginRegister = () => {
     setError(""); 
 
     try {
-      const response = await axios.post("http://localhost:4080/api/auth/login", {
+      const response = await axios.post("https://emp-backend-1s3q.onrender.com/api/auth/login", {
         email,
         password,
       });

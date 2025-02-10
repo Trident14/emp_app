@@ -21,7 +21,7 @@ const UpdateEventModal = ({ event, isOpen, onClose, onUpdate }) => {
    
     try {
         const token = cookies['access_token'];
-      const response = await fetch(`http://localhost:4080/api/events/update/${event._id}`, {
+      const response = await fetch(`https://emp-backend-1s3q.onrender.com/api/events/update/${event._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
